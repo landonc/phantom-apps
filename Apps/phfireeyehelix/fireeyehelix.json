@@ -1,0 +1,105 @@
+{
+  "appid": "e8c8880e-85f5-4192-b0df-e1f516345c88",
+  "name": "FireEye Helix",
+  "description": "API integration with the FireEye Helix platform.",
+  "type": "endpoint",
+  "product_vendor": "FireEye",
+  "logo": "logo_fireeye.svg",
+  "logo_dark": "logo_fireeye_dark.svg",
+  "product_name": "FireEye Helix",
+  "python_version": "3",
+  "product_version_regex": ".*",
+  "publisher": "Phantom",
+  "license": "Copyright (c) 2020 Splunk Inc.",
+  "app_version": "1.0.0",
+  "utctime_updated": "2020-04-29T13:06:37.746010Z",
+  "package_name": "phantom_fireeyehelix",
+  "main_module": "fireeyehelix_connector.py",
+  "min_phantom_version": "4.8.0",
+  "app_wizard_version": "1.0.0",
+  "configuration": {
+    "base_url": {
+      "description": "base url",
+      "data_type": "string",
+      "required": true,
+      "value_list": [],
+      "default": "https://apps.fireeye.com",
+      "order": 0
+    },
+    "helix_id": {
+      "description": "Helix instance id, can be located as noted as {HELIX_ID} of your Helix console path https://apps.fireeye.com/helix/id/{HELIX_ID}/",
+      "data_type": "string",
+      "required": true,
+      "value_list": [],
+      "default": "",
+      "order": 1
+    },
+    "api_key": {
+      "description": "api key needed for token based authentication",
+      "data_type": "string",
+      "required": true,
+      "value_list": [],
+      "default": "",
+      "order": 2
+    },
+    "timezone": {
+      "required": true,
+      "order": 5,
+      "data_type": "timezone",
+      "description": "Fireeye server timezone"
+    }
+  },
+  "actions": [
+    {
+      "read_only": true,
+      "description": "Validate the asset configuration for connectivity using supplied configuration",
+      "parameters": {},
+      "versions": "EQ(*)",
+      "action": "test connectivity",
+      "output": [],
+      "identifier": "test_connectivity",
+      "type": "test",
+      "verbose": ""
+    },
+    {
+      "action": "on poll",
+      "identifier": "on_poll",
+      "description": "get alerts seen by helix",
+      "verbose": "",
+      "type": "ingest",
+      "read_only": true,
+      "parameters": {
+        "container_id": {
+          "data_type": "string",
+          "order": 0,
+          "description": "Container IDs to limit the ingestion to",
+          "allow_list": true
+        },
+        "start_time": {
+          "data_type": "numeric",
+          "order": 1,
+          "description": "Start of time range, in epoch time (milliseconds)",
+          "verbose": "If not specified, the default is past 1 hour."
+        },
+        "end_time": {
+          "data_type": "numeric",
+          "order": 2,
+          "description": "End of time range, in epoch time (milliseconds)",
+          "verbose": "If not specified, the default is now."
+        },
+        "container_count": {
+          "data_type": "numeric",
+          "order": 3,
+          "description": "Maximum number of container records to query for"
+        },
+        "artifact_count": {
+          "data_type": "numeric",
+          "order": 4,
+          "description": "Maximum number of artifact records to query for"
+        }
+      },
+      "output": [],
+      "versions": "EQ(*)"
+    }
+  ]
+}
